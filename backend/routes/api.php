@@ -11,3 +11,4 @@ Route::get('/user', function (Request $request) {
 Route::get('/test', [App\Http\Controllers\Api\TestController::class, 'index']);
 
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
