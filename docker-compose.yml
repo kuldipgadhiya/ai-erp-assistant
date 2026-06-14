@@ -20,11 +20,16 @@ services:
       - app
 
   mysql:
-    image:  mysql:8
+    image: mysql:8
     container_name: ai_erp_mysql
-    restart:  unless-stopped
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: ai_erp
-      MYSQL_ROOT_PASSWORD:  root
+      MYSQL_ROOT_PASSWORD: root
     ports:
       - "33006:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

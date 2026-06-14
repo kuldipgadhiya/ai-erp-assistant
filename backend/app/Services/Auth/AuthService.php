@@ -4,6 +4,9 @@ namespace App\Services\Auth;
 
 use App\Repositories\Auth\AuthRepository;
 use Illuminate\Support\Facades\Hash;
+use App\DTOs\Auth\UserDTO;
+use App\Models\User;
+
 class AuthService
 {
     public function __construct(protected AuthRepository $authRepository)
@@ -11,10 +14,14 @@ class AuthService
 
     }
 
-    public function register(array $data)
+    public function register(UserDTO $userDTO): User
     {
-        // Hash the password before saving
-        $data['password'] = Hash::make($data['password']);
-        return $this->authRepository->create($data);
+        return $this->authRepository->create(
+            [
+                "name" => $userDTO->name,
+                "email" => $userDTO->email,
+                "password" => Hash::make($userDTO->password),
+            ]
+        );
     }
 }
