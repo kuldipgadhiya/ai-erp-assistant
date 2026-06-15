@@ -12,3 +12,7 @@ Route::get('/test', [App\Http\Controllers\Api\TestController::class, 'index']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
+
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');

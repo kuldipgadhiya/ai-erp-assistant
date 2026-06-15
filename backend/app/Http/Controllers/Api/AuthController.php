@@ -8,6 +8,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Services\Auth\AuthService;
 use App\DTOs\Auth\UserDTO;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -57,6 +58,25 @@ class AuthController extends Controller
                 'email' => $user->email,
                 'token' => $token
             ]
+        ]);
+    }
+
+    public function me(Request $request)
+    {
+        return response()->json([
+            'success' => true,
+            'message' => 'User data retrieved successfully',
+            'data' => $request->user()
+        ]);
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User logged out successfully'
         ]);
     }
 }
