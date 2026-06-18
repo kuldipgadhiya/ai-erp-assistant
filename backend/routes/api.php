@@ -21,5 +21,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('/product')->group(function () {
         Route::post('/create', [ProductController::class, 'createProduct']);
+        Route::get('/list', [ProductController::class, 'index']);
+        Route::get('/get-product-details/{id}', [ProductController::class, 'getProductById']);
+        Route::put('/{id}', [ProductController::class, 'updateProduct']);
     });
 });

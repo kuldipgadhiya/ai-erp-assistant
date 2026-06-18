@@ -11,4 +11,35 @@ class ProductRepository
     {
         return Product::create($data);
     }
+
+    public function getAllProducts($request)
+    {
+        $user = $request->user();
+        $limit = $request->limit ?? 10;
+        $products = Product::where("user_id", $user->id);
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $products = $products->where("name", "like", "%" . $search . "%")->orWhere("sku", $search);
+        }
+        if ($request->filled("sort") && in_array($request->sort, ["asc", "desc"])) {
+            $sort = $request->sort;
+            $products = $products->orderBy("id", $sort);
+        }
+        return $products->paginate($limit, ["*"]);
+    }
+
+    public function getProductById(int $id, $user)
+    {
+        return Product::where("user_id", $user->id)->find($id);
+    }
+
+    public function updateProduct(int $ProductId, array $data)
+    {
+        $product = $this->getProductById($ProductId, auth()->user());
+        if (!$product) {
+            return null;
+        }
+        $product->update($data);
+        return $product;
+    }
 }

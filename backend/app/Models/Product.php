@@ -21,5 +21,7 @@ class Product extends Model
         'price' => 'decimal:2',
         'stock' => 'integer',
         'is_active' => 'boolean',
+        'created_at' => 'datetime:m/d/Y h:i A',
+        'updated_at' => 'datetime:m/d/Y h:i A'
     ];
 }
