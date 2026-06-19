@@ -77,4 +77,27 @@ class ProductController extends Controller
             "message" => "Product not found!",
         ], 404);
     }
+
+    public function deleteProduct(int $id, Request $request)
+    {
+        $product = $this->productService->getProductById($request);
+        if ($product) {
+            $deleted = $this->productService->deleteProduct($request);
+            if ($deleted) {
+                return response()->json([
+                    "success" => true,
+                    "message" => "Product has been successfully deleted!",
+                ], 200);
+            }
+            return response()->json([
+                "success" => false,
+                "message" => "Product not found!",
+            ], 404);
+        }
+
+        return response()->json([
+            "success" => false,
+            "message" => "Product not found!",
+        ], 404);
+    }
 }

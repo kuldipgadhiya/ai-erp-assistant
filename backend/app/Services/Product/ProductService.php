@@ -31,7 +31,7 @@ class ProductService
         return $this->productRepository->getAllProducts($request);
     }
 
-    public function getProductById($request): \App\Models\Product
+    public function getProductById($request): \App\Models\Product|null
     {
         $id = $request->id;
         $user = $request->user();
@@ -51,5 +51,12 @@ class ProductService
                 "user_id" => $dto->userId,
             ]
         );
+    }
+
+    public function deleteProduct($request)
+    {
+        $id = $request->id;
+        $user = $request->user();
+        return $this->productRepository->deleteProduct($id, $user);
     }
 }

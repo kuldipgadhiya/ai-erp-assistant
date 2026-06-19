@@ -42,4 +42,14 @@ class ProductRepository
         $product->update($data);
         return $product;
     }
+
+    public function deleteProduct(int $id, $user)
+    {
+        $product = $this->getProductById($id, $user);
+        if (!$product) {
+            return null;
+        }
+        $product->delete();
+        return true;
+    }
 }
